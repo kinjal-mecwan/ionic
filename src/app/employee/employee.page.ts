@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { EmployeeService } from '../employee.service';
-import { ToastController } from '@ionic/angular';
+import { IonInput, ToastController } from '@ionic/angular';
 import { Observable, catchError, map, of } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -11,9 +12,17 @@ import { Observable, catchError, map, of } from 'rxjs';
   styleUrls: ['./employee.page.scss'],
 })
 export class EmployeePage implements OnInit {
+
+  inputModel = '';
+  
+  @ViewChild('ionInputEl', { static: true }) ionInputEl!: IonInput;
+
 empForm:FormGroup
 cities=[]
 _emailId
+date
+  pipe  = new DatePipe('en-US');
+  dateTime
   
   constructor(private empService:EmployeeService,private formBuilder:FormBuilder,private toastController: ToastController) { }
 
@@ -36,10 +45,24 @@ _emailId
 
     this.getCity();
     this.addValidator();
+    this.pnoValidator();
+
+    this.dateTime=Date.now()
+    this.date = this.pipe.transform(this.dateTime, 'yyyy-MM-dd');
+    console.log(this.pipe.transform(this.dateTime, 'yyyy-MM-dd'))
+  }
+
+  onInput(ev) {
+    const value = ev.target!.value;
+    const filteredValue = value.replace(/[^a-zA-Z]+/g,'');
+    this.ionInputEl.value = this.inputModel = filteredValue;
   }
 
   addValidator(){
     this.empForm.controls['EmailId'].setAsyncValidators([ this.uniqueEmailValidator()]);
+  }
+  pnoValidator(){
+    this.empForm.controls['PhoneNo'].setAsyncValidators([ this.uniquePnoneNoValidator()]);
   }
 
   onSubmit(){
@@ -75,5 +98,12 @@ _emailId
       );
     };
   }
-
+  uniquePnoneNoValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      return this.empService.checkPhone(control.value).pipe(
+        map((exists) => (exists ? { pnoExists: true } : null)),
+        catchError((err) => null)
+      );
+    };
+  }
 }

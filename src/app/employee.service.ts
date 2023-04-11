@@ -35,4 +35,7 @@ isLogged=true
   isAuthenticated(){
     return this.isLogged;
   }
+  checkPhone(pno:number){
+    return this.http.get("https://localhost:7255/api/checkPno/"+pno)
+  }
 }
