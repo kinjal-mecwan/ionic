@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>table</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">table</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div class="container">
+    <div class="table-responsive mb-3">
+      <table class="table table-striped" style="width:100%">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>FName</th>
+            <th>MName</th>
+            <th>LName</th>
+            <th>EmailId</th>
+            <th>PhoneNo</th>
+            <th>Gender</th>
+            <th>DateOfBirth</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Position</th>
+            <th>Department</th>
+            <th>Technology</th>
+            <th>IsActive</th>
+            <th>SMS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let emp of employees">
+            <td>{{emp.employeeId}}</td>
+            <td>{{emp.fName}}</td>
+            <td>{{emp.mName}}</td>
+            <td>{{emp.lName}}</td>
+            <td>{{emp.emailId}}</td>
+            <td>{{emp.phoneNo}}</td>
+            <td>{{emp.gender}}</td>
+            <td>{{emp.dateOfBirth|date:'dd-MM-yyyy'}}</td>
+            <td>{{emp.address}}</td>
+            <td>{{emp.city}}</td>
+            <td>{{emp.position}}</td>
+            <td>{{emp.department}}</td>
+            <td>{{emp.technology}}</td>
+            <td>{{emp.isActive}}</td>
+            <td>
+            <!--  <a target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Send Mail"
+                href="https://localhost:7255/api/sms/{{emp.employeeId}}" ><i
+                  class="fa-solid fa-envelope"></i>sms</a> -->
+                  <button class="btn btn-success" (click)="getEmpId(emp.employeeId)"><i class="fa fa-envelope"></i>Sms</button> 
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,217 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>employee</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container py-3">
+    <div class=" row justify-content-center">
+      <div class="col-md-6 text-left bg-white rounded shadow py-3">
+        <form [formGroup]="empForm" (ngSubmit)="onSubmit()">
+          <div class="form-group row">
+            <ion-item>
+              <ion-label class="col-md-2 mb-3">First Name:</ion-label>
+              <ion-input type="text" placeholder="Enter First Name" class="form-control "
+                formControlName="FName"></ion-input>
+            </ion-item>
+            <div *ngIf="value['FName'].touched && value['FName'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['FName'].errors && value['FName'].errors['required']"
+                class="text-danger">Enter First Name</ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <ion-item>
+              <ion-label class="col-md-2 mb-3">Middle Name:</ion-label>
+              <ion-input type="text" placeholder="Enter Middle Name" class="form-control"
+                formControlName="MName"></ion-input>
+            </ion-item>
+            <div *ngIf="value['MName'].touched && value['MName'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['MName'].errors && value['MName'].errors['required']"
+                class="text-danger">Enter Middle Name</ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <ion-item>
+              <ion-label class="col-md-2 mb-3">Last Name:</ion-label>
+              <ion-input type="text" placeholder="Enter Last Name" class="form-control "
+                formControlName="LName"></ion-input>
+            </ion-item>
+            <div *ngIf="value['LName'].touched && value['LName'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['LName'].errors && value['LName'].errors['required']"
+                class="text-danger">Enter Last Name</ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <ion-item>
+              <ion-label class="col-md-2 mb-3">Email:</ion-label>
+              <ion-input type="email" placeholder="Enter Email" class="form-control"
+                formControlName="EmailId" ></ion-input>
+            </ion-item>
+            <div *ngIf="value['EmailId'].touched && value['EmailId'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['EmailId'].errors && value['EmailId'].errors['required']"
+                class="text-danger">Enter Email</ion-note>
+              <ion-note slot="error" *ngIf="value['EmailId'].errors && value['EmailId'].errors['pattern']"
+                class="text-danger">Enter valid Email</ion-note>
+              <ion-note slot="error" *ngIf="value['EmailId'].errors && value['EmailId'].errors['emailExists']"
+                class="text-danger">Email Already Exists</ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <ion-item counter="true">
+              <ion-label class="col-md-2 mb-3">MobileNo:</ion-label>
+              <ion-input type="number" placeholder="Enter Number" class="form-control"
+                formControlName="PhoneNo"></ion-input>
+            </ion-item>
+            <div *ngIf="value['PhoneNo'].touched && value['PhoneNo'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['PhoneNo'].errors && value['PhoneNo'].errors['required']"
+                class="text-danger">Enter MobileNo</ion-note>
+              <ion-note slot="error" *ngIf="value['PhoneNo'].errors && value['PhoneNo'].errors['pattern']"
+                class="text-danger">Enter valid PhoneNo</ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <ion-item>
+              <ion-label class="col-md-2 mb-3">Gender: </ion-label>
+              <ion-radio-group formControlName="Gender">
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>Male </ion-label>
+                      <ion-radio value="Male"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label> Female </ion-label>
+                      <ion-radio value="Female" name="Female"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+            </ion-item>
+            <div *ngIf="value['Gender'].touched && value['Gender'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['Gender'].errors && value['Gender'].errors['required']"
+                class="text-danger">Select Gender</ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <ion-item>
+              <ion-label>Date of Birth:</ion-label>
+              <ion-datetime [showDefaultTitle]="true" presentation="date" class="form-control"
+                formControlName="DateOfBirth"></ion-datetime>
+            </ion-item>
+            <div *ngIf="value['DateOfBirth'].touched && value['DateOfBirth'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['DateOfBirth'].errors && value['DateOfBirth'].errors['required']"
+                class="text-danger">Select Date Of Birth</ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <ion-item>
+              <ion-label class="col-md-2 mb-3">Address:</ion-label>
+              <ion-input type="text" placeholder="Enter Address" class="form-control"
+                formControlName="Address"></ion-input>
+            </ion-item>
+            <div *ngIf="value['Address'].touched && value['Address'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['Address'].errors && value['Address'].errors['required']"
+                class="text-danger">Enter Address</ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <ion-list>
+              <ion-item>
+                <ion-label class="col-md-2 mb-3">City:</ion-label>
+                <ion-select interface="popover" placeholder="Select City" class="form-control" formControlName="City" >
+                  <ion-select-option *ngFor="let city of cities" >{{city.cityName}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+            <div *ngIf="value['City'].touched && value['City'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['City'].errors && value['City'].errors['required']"
+                class="text-danger">Select City</ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <!-- <ion-item >  -->
+            <ion-list>
+              <ion-item>
+                <ion-label class="col-md-2 mb-3">Position:</ion-label>
+                <ion-select interface="popover" placeholder="Select Position" class="form-control"
+                  formControlName="Position">
+                  <ion-select-option value="Level-1">Level-1</ion-select-option>
+                  <ion-select-option value="Level-2">Level-2</ion-select-option>
+                  <ion-select-option value="Level-3">Level-3</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+            <div *ngIf="value['Position'].touched && value['Position'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['Position'].errors && value['Position'].errors['required']"
+                class="text-danger">Select Position</ion-note>
+            </div>
+            <!-- </ion-item>  -->
+          </div>
+          <br />
+          <div class="form-group row">
+            <ion-list>
+              <ion-item>
+                <ion-label class="col-md-2 mb-3">Department:</ion-label>
+                <ion-select interface="popover" placeholder="Select Department" class="form-control"
+                  formControlName="Department">
+                  <ion-select-option value="Devlopment">Devlopment</ion-select-option>
+                  <ion-select-option value="HR">HR</ion-select-option>
+                  <ion-select-option value="Account">Account</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+            <div *ngIf="value['Department'].touched && value['Department'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['Department'].errors && value['Department'].errors['required']"
+                class="text-danger">Select Department</ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <ion-list>
+              <ion-item>
+                <ion-label class="col-md-2 mb-3">Technology:</ion-label>
+                <ion-select interface="popover" placeholder="Select Technology" class="form-control"
+                  formControlName="Technology">
+                  <ion-select-option value=".Net">.Net</ion-select-option>
+                  <ion-select-option value="Angular">Angular</ion-select-option>
+                  <ion-select-option value="SQL">SQL</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+            <div *ngIf="value['Technology'].touched && value['Technology'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['Technology'].errors && value['Technology'].errors['required']"
+                class="text-danger">Select Technology</ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="form-group row">
+            <ion-item>
+              <ion-label>IsActive:</ion-label>
+              <ion-checkbox slot="start" formControlName="IsActive"></ion-checkbox>
+            </ion-item>
+            <div *ngIf="value['IsActive'].touched && value['IsActive'].invalid" class="invalid">
+              <ion-note slot="error" *ngIf="value['IsActive'].errors && value['IsActive'].errors['required']"
+                class="text-danger">Check this CheckBox </ion-note>
+            </div>
+          </div>
+          <br />
+          <div class="text-end">
+            <button type="submit" class="btn btn-success" (click)="presentToast('top')" [disabled]="!empForm.valid">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ion-content>

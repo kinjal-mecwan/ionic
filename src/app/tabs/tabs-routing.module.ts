@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { AuthGuard } from '../auth.guard';
+import { AuthChildGuard } from '../auth-child.guard';
+import { AuthDeActiveGuard } from '../auth-de-active.guard';
+import { AuthLoadGuard } from '../auth-load.guard';
 
 const routes: Routes = [
   {
@@ -13,11 +17,19 @@ const routes: Routes = [
       },
       {
         path: 'tab2',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule),canActivateChild:[AuthChildGuard]
       },
       {
         path: 'tab3',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule),canDeactivate:[AuthDeActiveGuard]
+      },
+      {
+        path: 'employee',
+        loadChildren: () => import('../employee/employee.module').then(m => m.EmployeePageModule),canLoad:[AuthLoadGuard]
+      },
+      {
+        path: 'table',
+        loadChildren: () => import('../table/table.module').then(m => m.TablePageModule),canActivate:[AuthGuard]
       },
       {
         path: '',
